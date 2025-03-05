@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <style>
+       body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: url('/Users/bhleg/Dev/BrowserStart/white_black_sand_desert_dune_4k_hd_nature.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: "Fira Code", monospace;
+}
+
+        .rounded-box {
+            width: 600px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.16);
+            border-radius: 10px;
+            backdrop-filter: blur(16px);
+            box-shadow: 
+                0 0 5px rgba(0, 0, 0, 0.145),
+                0 0 25px rgba(0, 0, 0, 0.145),
+                0 0 50px rgba(0, 0, 0, 0.145),
+                0 0 200px rgba(0, 0, 0, 0.145);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding-bottom: 60px;
+        }
+
+        .subtext {
+            cursor: pointer;
+            transition: opacity 0.2s, color 0.2s;
+            color: white;
+        }
+
+        .subtext:hover {
+            color: #90EE90;
+        }
+
+        .subtext.dimmed {
+            opacity: 0.3;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            font-size: 14px;
+            font-family: "Fira Code", monospace;
+            letter-spacing: 2px;
+        }
+
+        .prompt {
+            margin-right: 5px;
+            letter-spacing: 2px;
+        }
+
+        .prompt .user {
+            color: #AFF8B4;
+        }
+
+        .prompt .at {
+            color: #FFFFFF;
+        }
+
+        .prompt .browser {
+            color: #AFF8B4;
+        }
+
+        .prompt .arrow {
+            color: #000000;
+        }
+
+        .text-area {
+            flex-grow: 1;
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 14px;
+            font-family: "Fira Code", monospace;
+            outline: none;
+            caret-color: #B62ED8;
+            letter-spacing: 2px;
+        }
+
+        .category.social {
+            color: #000000;
+        }
+
+        .category.general {
+            color: #000000;
+        }
+
+        .category.other {
+            color: #000000;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputBox = document.querySelector(".text-area");
+            const clickableItems = document.querySelectorAll(".subtext");
+
+            const links = {
+                " YouTube": "https://www.youtube.com/",
+                "yt": "https://www.youtube.com/",
+                "youtube": "https://www.youtube.com/",
+                " Reddit": "https://www.reddit.com/",
+                " X": "https://x.com/home/",
+                " Grok": "https://grok.com/?referrer=website",
+                " Coin": "https://coinmarketcap.com/portfolio-tracker/",
+                "️ Binance": "https://www.binance.com/en-GB",
+                "️ bin": "https://www.binance.com/en-GB",
+                "️ TradingView": "https://www.tradingview.com/",
+                "️ tv": "https://www.tradingview.com/",
+                " Pirate": "https://www.pirateproxy-bay.com/",
+                " War": "https://antiwar.com/",
+                " Finance": "https://uk.finance.yahoo.com/",
+                " yahoo": "https://uk.finance.yahoo.com/",
+                " News": "https://www.bbc.co.uk/news",
+                " bbc": "https://www.bbc.co.uk/news",
+                " eBay": "https://www.ebay.co.uk/",
+                "gmail": "https://proton.me/", 
+                "google drive": "https://proton.me/drive", 
+                "google docs": "https://www.libreoffice.org/", 
+                "google sheets": "https://www.libreoffice.org/", 
+                "google slides": "https://www.libreoffice.org/", 
+                "google maps": "https://www.openstreetmap.org/", 
+                "google meet": "https://signal.org/", 
+                "maps": "https://www.openstreetmap.org/"
+                "twitter": "https://x.com/home"
+                "grok": "https://grok.com/?referrer=website"
+                "youtube": "https://www.youtube.com/?gl=GB"
+                "reddit": "https://www.reddit.com/"
+
+            };
+
+            function filterItems(searchText) {
+                clickableItems.forEach(item => {
+                    const itemText = item.innerText.toLowerCase();
+                    if (itemText.includes(searchText.toLowerCase())) {
+                        item.classList.remove("dimmed");
+                    } else {
+                        item.classList.add("dimmed");
+                    }
+                });
+            }
+
+            inputBox.addEventListener("input", function () {
+                const inputText = inputBox.value.trim();
+                filterItems(inputText);
+            });
+
+            inputBox.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    const inputText = inputBox.value.trim().toLowerCase();
+                    if (links[inputText]) {
+                        window.open(links[inputText], "_blank");
+                    } else {
+                        window.open(`https://search.inetol.net/search?q=${encodeURIComponent(inputText)}`, "_blank");
+                    }
+                    inputBox.value = "";
+                    filterItems("");
+                }
+            });
+
+            clickableItems.forEach(item => {
+                item.addEventListener("click", function () {
+                    const text = item.innerText.toLowerCase();
+                    if (links[text]) {
+                        window.open(links[text], "_blank");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="rounded-box">
+        <div class="content">
+            <div class="column">
+                <div class="category >"> > </div>
+                <div class="subtext"> YouTube</div>
+                <div class="subtext"> Reddit</div>
+                <div class="subtext"> X</div>
+                <div class="subtext"> Grok</div>
+            </div>
+            <div class="column">
+                <div class="category <"> < </div>
+                <div class="subtext"> Coin</div>
+                <div class="subtext"> Binance</div>
+                <div class="subtext"> TradingView</div>
+                <div class="subtext"> Pirate</div>
+            </div>
+            <div class="column">
+                <div class="category -"> - </div>
+                <div class="subtext"> War</div>
+                <div class="subtext"> Finance</div>
+                <div class="subtext"> News</div>
+                <div class="subtext"> eBay</div>
+            </div>
+        </div>
+        <div class="input-container">
+            <span class="prompt">
+                <span class="user">admin</span><span class="at">@</span><span class="browser">browser</span> <span class="arrow">❯</span>
+            </span>
+            <input type="text" class="text-area" placeholder="command...">
+        </div>
+    </div>
+</body>
+</html>
